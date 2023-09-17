@@ -6,15 +6,6 @@ import cv2
 import shutil
 import numpy as np
 
-def parse_args():
-    parser = argparse.ArgumentParser(description='Semantic Segmentation Testing With Pytorch')
-    parser.add_argument('--data_dir', type=str, default='/home/wmy/wmy/summer_project/Project/sever_data_dir', help='test img dirs without_gt')  # 上传图片存储的地址
-    # 推理脚本
-    parser.add_argument('--infer_dir', type=str, default='/home/wmy/wmy/summer_project/Project/G_models_for_images.py', help='The path of infer.py')
-    
-    args = parser.parse_args()
-    return args
-
 # 数据预处理
 def normalize(data, mean, std):
     data = data.astype('float32')
@@ -83,15 +74,27 @@ def postprocess(img_dir, bin_dir, output_dir):
     print("Infer time is {:.3f}s per img".format((end - start)/len(file_list)*36))
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Semantic Segmentation Testing With Pytorch')
+    parser.add_argument('--data_dir', type=str, default='', help='test img dirs without_gt')
+    parser.add_argument('--infer_dir', type=str, default='', help='The path of infer.py')
+    
+    args = parser.parse_args()
+    return args
+
 if __name__ == '__main__':
-    # 
     args = parse_args()
+    server_root = os.getcwd()
+    # init path
+    args.data_dir = os.path.join(server_root, 'sever_data_dir')
+    args.infer_dir = os.path.join(server_root, 'server_models_for_images.py')
+    # path
     input_dir = os.path.join(args.data_dir, 'input')                        # 客户端上传的图片地址
     input_bin_dir = os.path.join(args.data_dir, 'input_cache')              # 输入缓存
     output_bin_dir = os.path.join(args.data_dir, 'output_cache')            # 输出缓存
     output_dir = os.path.join(args.data_dir, 'output')                      # 输出
-    done_upload_flag = os.path.join(args.data_dir, 'done_upload')           # 
-    done_infer_flag = os.path.join(args.data_dir, 'done_infer')             # 
+    done_upload_flag = os.path.join(args.data_dir, 'done_upload')           
+    done_infer_flag = os.path.join(args.data_dir, 'done_infer')             
     for d in [input_dir, input_bin_dir, output_bin_dir, output_dir]:
         if os.path.exists(d):
             shutil.rmtree(d)
