@@ -5,10 +5,10 @@ import matplotlib.pylab as plt
 import argparse
 
 import torch
+# have been installed mmseg
 from mmseg.apis import init_model, inference_model, show_result_pyplot
 
-os.chdir('mmsegmentation')
-
+# os.chdir('mmsegmentation')
 
 def visualization(img_bgr, result, title, out_file):
     pred_mask = result.pred_sem_seg.data[0].detach().cpu().numpy()
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--model_name', type=str, default='segformer')
-    parser.add_argument('--config_file', type=str, default='configs/segformer/segformer_mit-b5_8xb1-160k_cityscapes-1024x1024.py', 
+    parser.add_argument('--config_file', type=str, default='./mmsegmentation/configs/segformer/segformer_mit-b5_8xb1-160k_cityscapes-1024x1024.py', 
                         help='模型 config 配置文件')
     parser.add_argument('--checkpoint_file', type=str, default='https://download.openmmlab.com/mmsegmentation/v0.5/segformer/segformer_mit-b5_8x1_1024x1024_160k_cityscapes/segformer_mit-b5_8x1_1024x1024_160k_cityscapes_20211206_072934-87a052ec.pth', 
                         help='模型 checkpoint 权重文件')

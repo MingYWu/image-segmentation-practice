@@ -9,7 +9,7 @@ import torch
 from PIL import Image
 import cv2
 
-os.chdir('mmsegmentation')
+# os.chdir('mmsegmentation')
 
 import mmcv
 import mmengine
@@ -77,7 +77,7 @@ if __name__ =='__main__':
     基于citysspace数据集，建立推理模型
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config_file', type=str, default='./configs/segformer/segformer_mit-b5_8xb1-160k_cityscapes-1024x1024.py', 
+    parser.add_argument('--config_file', type=str, default='./mmsegmentation/configs/segformer/segformer_mit-b5_8xb1-160k_cityscapes-1024x1024.py', 
                         help='模型 config 配置文件')
     parser.add_argument('--checkpoint_file', type=str, default='https://download.openmmlab.com/mmsegmentation/v0.5/segformer/segformer_mit-b5_8x1_1024x1024_160k_cityscapes/segformer_mit-b5_8x1_1024x1024_160k_cityscapes_20211206_072934-87a052ec.pth', 
                         help='模型 checkpoint 权重文件')
@@ -85,7 +85,7 @@ if __name__ =='__main__':
                         help='视频路径')
     parser.add_argument('--temp_out_dir',type=str, default='',help='创建临时文件夹，单帧视频保存的位置')
     parser.add_argument('--out_dir',type=str, default='./outputs/',help='视频保存的位置')
-    parser.add_argument('--temp_dir_delete',type=str, default='True')
+    parser.add_argument('--temp_dir_delete',type=str, default=True)
     
     opt = parser.parse_args()
     
