@@ -78,7 +78,18 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Semantic Segmentation Testing With Pytorch')
     parser.add_argument('--data_dir', type=str, default='', help='test img dirs without_gt')
     parser.add_argument('--infer_dir', type=str, default='', help='The path of infer.py')
-    
+    # parser.add_argument('--model_name', type=str, default='segformer')  
+    # parser.add_argument('--config_file', type=str, default='./mmsegmentation/configs/segformer/segformer_mit-b5_8xb1-160k_cityscapes-1024x1024.py', 
+    #                     help='模型 config 配置文件')
+    # parser.add_argument('--checkpoint_file', type=str, default='https://download.openmmlab.com/mmsegmentation/v0.5/segformer/segformer_mit-b5_8x1_1024x1024_160k_cityscapes/segformer_mit-b5_8x1_1024x1024_160k_cityscapes_20211206_072934-87a052ec.pth', 
+    #                     help='模型 checkpoint 权重文件')
+
+    parser.add_argument('--model_name', type=str, default='mask2former')
+    parser.add_argument('--config_file', type=str, default='./mmsegmentation/configs/mask2former/mask2former_swin-b-in22k-384x384-pre_8xb2-90k_cityscapes-512x1024.py', 
+                        help='模型 config 配置文件')
+    parser.add_argument('--checkpoint_file', type=str, default='https://download.openmmlab.com/mmsegmentation/v0.5/mask2former/mask2former_swin-b-in22k-384x384-pre_8xb2-90k_cityscapes-512x1024/mask2former_swin-b-in22k-384x384-pre_8xb2-90k_cityscapes-512x1024_20221203_045030-9a86a225.pth', 
+                        help='模型 checkpoint 权重文件')
+
     args = parser.parse_args()
     return args
 
@@ -112,7 +123,10 @@ if __name__ == '__main__':
             
             img_path = os.path.join(input_dir, input_list[0])
 
-            os.system(f'python3 {args.infer_dir} --img_path {img_path}  --out_file {output_dir}')
+            # os.system(f'python3 {args.infer_dir} --img_path {img_path}  --out_file {output_dir}')
+            os.system(f'python3 {args.infer_dir} --img_path {img_path}  --out_file {output_dir} --model_name {args.model_name} \
+                      --config_file {args.config_file} --checkpoint_file {args.checkpoint_file}')
+            
             os.mkdir(done_infer_flag)
             
             print("done")
